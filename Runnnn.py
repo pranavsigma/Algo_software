@@ -7,26 +7,6 @@ import numpy as np
 import pytz
 from datetime import datetime
 
-
-# Inject custom CSS to expand the layout
-st.markdown(
-    """
-    <style>
-    .full-width {
-        width: 100%;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Use the full-width class for your content
-st.markdown('<div class="full-width">Your content here</div>', unsafe_allow_html=True)
-
-
-st.title('Navigate Your Trades')
-
-
 def job():
     #Integrating milli-Second Spot Data (/1000 - to less the burden) and classyifying them in Candle components
 
@@ -205,7 +185,7 @@ def job():
         )
     ])
 
-    st.plotly_chart(fig,use_container_width=True)
+    
 
 
 
@@ -220,19 +200,7 @@ def job():
     it_money = (market_open // 50) * 50
 
 
-    col1, col2, col3 = st.columns(3)
 
-# Display metrics in each column
-    col1.metric("Spot price", formatted_spot, delta_spot)
-    col2.metric('Market Open at', market_open)
-    col3.metric('Volatility', Nifty_Vix, Diff_Vix)
-    
-    
-    st.markdown(f'<h2 style="color: black ;">Optimal Strike price for trade: {it_money}</h2>', unsafe_allow_html=True)
-    st.markdown('\n')  # Adding a blank line for spacing
-    st.markdown(f'<h2 style="color: red;">Resistance bar: {resistance}</h2>', unsafe_allow_html=True)
-    st.markdown('\n\n')  # Adding two blank lines for more spacing
-    st.markdown(f'<h2 style="color: blue;">Support bar: {support}</h2>', unsafe_allow_html=True)
 
 
 
@@ -264,7 +232,50 @@ def job():
 
     buy_calls_df, buy_puts_df, message = Buy()
 
-    col4, col5 = st.columns(2)
+    
+# Schedule the job to run every hour
+schedule.every(5).minutes.do(job)
+
+# Infinite loop to keep the script running
+while True:
+    schedule.run_pending()
+    time.sleep(60)  # Check every minute if there's any job to run
+
+# Inject custom CSS to expand the layout
+st.markdown(
+    """
+    <style>
+    .full-width {
+        width: 100%;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Use the full-width class for your content
+st.markdown('<div class="full-width">Your content here</div>', unsafe_allow_html=True)
+
+
+st.title('Navigate Your Trades')
+
+st.plotly_chart(fig,use_container_width=True)
+
+    col1, col2, col3 = st.columns(3)
+
+# Display metrics in each column
+    col1.metric("Spot price", formatted_spot, delta_spot)
+    col2.metric('Market Open at', market_open)
+    col3.metric('Volatility', Nifty_Vix, Diff_Vix)
+    
+    
+    st.markdown(f'<h2 style="color: black ;">Optimal Strike price for trade: {it_money}</h2>', unsafe_allow_html=True)
+    st.markdown('\n')  # Adding a blank line for spacing
+    st.markdown(f'<h2 style="color: red;">Resistance bar: {resistance}</h2>', unsafe_allow_html=True)
+    st.markdown('\n\n')  # Adding two blank lines for more spacing
+    st.markdown(f'<h2 style="color: blue;">Support bar: {support}</h2>', unsafe_allow_html=True)
+
+col4, col5 = st.columns(2)
     if buy_calls_df is not None:
         if not buy_calls_df.empty:
             col4.write("**Call Trades to be executed**")
@@ -292,10 +303,4 @@ def job():
     if message:
         st.title(f"{message}")
 
-# Schedule the job to run every hour
-schedule.every(5).minutes.do(job)
 
-# Infinite loop to keep the script running
-while True:
-    schedule.run_pending()
-    time.sleep(60)  # Check every minute if there's any job to run
