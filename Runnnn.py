@@ -276,31 +276,32 @@ st.markdown('\n\n')  # Adding two blank lines for more spacing
 st.markdown(f'<h2 style="color: blue;">Support bar: {support}</h2>', unsafe_allow_html=True)
 
 col4, col5 = st.columns(2)
-    if buy_calls_df is not None:
-        if not buy_calls_df.empty:
-            col4.write("**Call Trades to be executed**")
-            col4.dataframe(buy_calls_df)
-        else:
-            col4.write("**Refrain from buying Call Options**")
-            col4.dataframe(buy_calls_df)
+if buy_calls_df is not None:
+    if not buy_calls_df.empty:
+        col4.write("**Call Trades to be executed**")
+        col4.dataframe(buy_calls_df)
     else:
         col4.write("**Refrain from buying Call Options**")
         col4.dataframe(buy_calls_df)
+else:
+    col4.write("**Refrain from buying Call Options**")
+    col4.dataframe(buy_calls_df)
 
 
-    if buy_puts_df is not None:
-        if not buy_puts_df.empty:
-            col5.write("**Put Trades to be executed**")
-            col5.dataframe(buy_puts_df)
-        else:
-            col5.write("**Refrain from buying Put Options**")
-            col5.dataframe(buy_puts_df)
+if buy_puts_df is not None:
+    if not buy_puts_df.empty:
+        col5.write("**Put Trades to be executed**")
+        col5.dataframe(buy_puts_df)
     else:
         col5.write("**Refrain from buying Put Options**")
         col5.dataframe(buy_puts_df)
+else:
+    col5.write("**Refrain from buying Put Options**")
+    col5.dataframe(buy_puts_df)
 
 
-    if message:
-        st.title(f"{message}")
+if message:
+    st.title(f"{message}")
+
 
 
