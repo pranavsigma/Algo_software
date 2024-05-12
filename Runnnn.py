@@ -261,7 +261,7 @@ st.title('Navigate Your Trades')
 
 st.plotly_chart(fig,use_container_width=True)
 
-    col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns(3)
 
 # Display metrics in each column
     col1.metric("Spot price", formatted_spot, delta_spot)
