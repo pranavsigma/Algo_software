@@ -264,16 +264,16 @@ st.plotly_chart(fig,use_container_width=True)
 col1, col2, col3 = st.columns(3)
 
 # Display metrics in each column
-    col1.metric("Spot price", formatted_spot, delta_spot)
-    col2.metric('Market Open at', market_open)
-    col3.metric('Volatility', Nifty_Vix, Diff_Vix)
-    
-    
-    st.markdown(f'<h2 style="color: black ;">Optimal Strike price for trade: {it_money}</h2>', unsafe_allow_html=True)
-    st.markdown('\n')  # Adding a blank line for spacing
-    st.markdown(f'<h2 style="color: red;">Resistance bar: {resistance}</h2>', unsafe_allow_html=True)
-    st.markdown('\n\n')  # Adding two blank lines for more spacing
-    st.markdown(f'<h2 style="color: blue;">Support bar: {support}</h2>', unsafe_allow_html=True)
+col1.metric("Spot price", formatted_spot, delta_spot)
+col2.metric('Market Open at', market_open)
+col3.metric('Volatility', Nifty_Vix, Diff_Vix)
+
+
+st.markdown(f'<h2 style="color: black ;">Optimal Strike price for trade: {it_money}</h2>', unsafe_allow_html=True)
+st.markdown('\n')  # Adding a blank line for spacing
+st.markdown(f'<h2 style="color: red;">Resistance bar: {resistance}</h2>', unsafe_allow_html=True)
+st.markdown('\n\n')  # Adding two blank lines for more spacing
+st.markdown(f'<h2 style="color: blue;">Support bar: {support}</h2>', unsafe_allow_html=True)
 
 col4, col5 = st.columns(2)
     if buy_calls_df is not None:
