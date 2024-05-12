@@ -1,7 +1,2 @@
-streamlit
 schedule
-requests
-pandas
-numpy
-pytz
 plotly
