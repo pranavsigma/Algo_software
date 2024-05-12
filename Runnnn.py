@@ -48,15 +48,30 @@ class vix_india:
             return pd.DataFrame()
 
 # Verification
+# Verification
 if __name__ == "__main__":
     vix_india_ohcs = vix_india(starting_date="25-04-2024")
     data_vix = vix_india_ohcs.fetch_vix_data()
 
-dataframe_vix = pd.DataFrame(data_vix)
-Nifty_Vix = dataframe_vix.iloc[-1, 7]
-Nifty_Vix_Y = dataframe_vix.iloc[-2, 7]
-D_Vix = Nifty_Vix - Nifty_Vix_Y
-Diff_Vix = "{:.2f}%".format(D_Vix)
+    # Debug statements to check VIX data
+    st.write("VIX Data:", data_vix)
+    dataframe_vix = pd.DataFrame(data_vix)
+    st.write("VIX DataFrame:", dataframe_vix)
+
+    # Check if dataframe_vix is not empty before accessing its elements
+    if not dataframe_vix.empty:
+        Nifty_Vix = dataframe_vix.iloc[-1, 7]
+        Nifty_Vix_Y = dataframe_vix.iloc[-2, 7]
+        D_Vix = Nifty_Vix - Nifty_Vix_Y
+        Diff_Vix = "{:.2f}%".format(D_Vix)
+    else:
+        # Handle the case when dataframe_vix is empty
+        st.error("VIX DataFrame is empty. Please check your data source or API.")
+        Nifty_Vix = None
+        Nifty_Vix_Y = None
+        D_Vix = None
+        Diff_Vix = None
+
 
 class SpotPrice:
     def __init__(self, identifier="NIFTY 50", name="NIFTY 50", timeout=15):
